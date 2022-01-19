@@ -23,6 +23,8 @@ class Solution
 {
     public:
     
+    // Reference Video
+    // https://www.youtube.com/watch?v=EjEbZqGpASk
     bool helper(Node* root, Node* minNode, Node* maxNode) {
         if (root == NULL)
             return true;
