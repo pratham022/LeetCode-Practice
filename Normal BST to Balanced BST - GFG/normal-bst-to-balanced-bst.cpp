@@ -163,6 +163,8 @@ Node* constructBalancedBST(vector<int> &arr, int low, int high) {
 // function should return root of the modified BST
 Node* buildBalancedTree(Node* root)
 {
+    // Simple Approach: Traverse the tree in inorder fashion and construct the inorder traversal array
+    // Now, construct a BST from this inorder array by using recursive method
     vector<int> inorderArr;
     inorder(root, inorderArr);
     
