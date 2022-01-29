@@ -1,0 +1,4 @@
+- Good video to clear the concept: https://www.youtube.com/watch?v=0do2734xhnU
+- We have to check how much to the right and to the left the current index element will stretch
+- It is observed that heights[i] will stretch until heights[j] are greater than or equal to heights[i]
+- If any small height is found, then it will not stretch
