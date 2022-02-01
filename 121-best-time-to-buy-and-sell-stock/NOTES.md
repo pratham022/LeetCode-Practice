@@ -1,0 +1,5 @@
+- Since we can perform the transaction only one time, we will try to buy the stock at the lowest price and sell it at the maximum price
+- So, keep a variable `minCost` to hold the minimum price upto `i`
+- Also, keep a variable `maxProfit`.
+- At every `i`, calculate `maxProfit = max(maxProfit, prices[i] - minCost);`
+- Also update `minCost = min(minCost, prices[i]);`
