@@ -24,17 +24,31 @@ public:
             }
         }
         
+        
+//         if(cycleExists) {
+//             hare = head;
+//             if(hare == turtle)
+//                 return hare;
+            
+//             while(hare && turtle) {
+//                 hare = hare->next;
+//                 turtle = turtle->next;
+//                 if(hare == turtle)
+//                     return hare;
+//             }
+//         }
+        
+//         ANOTHER APPROACH
         if(cycleExists) {
-            hare = head;
+            turtle = head;
             if(hare == turtle)
                 return hare;
             
-            while(hare && turtle) {
+            while(hare->next != turtle->next) {
                 hare = hare->next;
                 turtle = turtle->next;
-                if(hare == turtle)
-                    return hare;
             }
+            return hare->next;
         }
         return NULL;
     }
