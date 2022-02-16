@@ -87,24 +87,25 @@ class Solution
            slow = slow->next->next;
            if(fast == slow)
            {
-               if(fast == head)
+               // loop exists...
+               if(fast == head)                 // here the starting point of the loop is head
                {
-                   slow = head;
+                   slow = head;                 // So just point slow to the end node of the list
                    while(slow->next != fast)
                    {
                        slow = slow->next;
                    }
-                   slow->next = NULL;
-                   return;
+                   slow->next = NULL;           // then remove the loop
+                   return;                      // return
                }
-               slow = head;
-               while(fast->next != slow->next)
+               slow = head;                     // ELSE move slow to the head
+               while(fast->next != slow->next)  // until the next pointers of fast and slow are NOT null
                {
-                   fast = fast->next;
+                   fast = fast->next;           // move both the pointers at equal pace
                    slow = slow->next;
                }
-               fast->next = NULL;
-               return;
+               fast->next = NULL;               // after doing so, fast will always be on the last node of the list
+               return;                          // because initially we did slow = head, so remove the loop and return
            }
        }
        return;
