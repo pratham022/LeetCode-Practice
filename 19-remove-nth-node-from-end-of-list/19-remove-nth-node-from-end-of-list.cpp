@@ -26,7 +26,7 @@ public:
         // nth node from the end = (len - n + 1)th from beginning
         
         int k = len - n;
-        
+    
         ListNode* p = head;
         ListNode* prev = NULL;
         
@@ -36,7 +36,7 @@ public:
         }
         
         if(prev == NULL) {
-            // we have to remove the head node here
+            // we have to remove head here
             head = head->next;
             delete p;
         }
@@ -44,7 +44,7 @@ public:
             prev->next = p->next;
             delete p;
         }
-        return head;
         
+        return head;
     }
 };
