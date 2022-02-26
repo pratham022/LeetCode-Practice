@@ -10,46 +10,35 @@ class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
         
-        ListNode* hare = head;
-        ListNode* turtle = head;
+        ListNode* fast = head;
+        ListNode* slow = head;
+        
         bool cycleExists = false;
         
-        while(hare && turtle && hare->next) {
-            hare = hare->next->next;
-            turtle = turtle->next;
+        while(fast && fast->next && slow) {
+            fast = fast->next->next;
+            slow = slow->next;
             
-            if(hare == turtle) {
+            if(fast == slow) {
                 cycleExists = true;
                 break;
             }
         }
         
-        
-//         if(cycleExists) {
-//             hare = head;
-//             if(hare == turtle)
-//                 return hare;
-            
-//             while(hare && turtle) {
-//                 hare = hare->next;
-//                 turtle = turtle->next;
-//                 if(hare == turtle)
-//                     return hare;
-//             }
-//         }
-        
-//         ANOTHER APPROACH
         if(cycleExists) {
-            turtle = head;
-            if(hare == turtle)
-                return hare;
+            fast = head;
+            if(fast == slow)
+                return fast;
             
-            while(hare->next != turtle->next) {
-                hare = hare->next;
-                turtle = turtle->next;
+            while(fast && slow) {
+                fast = fast->next;
+                slow = slow->next;
+                
+                if(fast == slow)
+                    return fast;
             }
-            return hare->next;
         }
+        
         return NULL;
     }
 };
