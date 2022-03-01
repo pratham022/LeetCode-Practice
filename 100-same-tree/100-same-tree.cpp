@@ -14,22 +14,12 @@ public:
     bool helper(TreeNode* p, TreeNode* q) {
         if(p == NULL && q == NULL)
             return true;
-        else if(p == NULL && q != NULL)
+        if(p == NULL || q == NULL)
             return false;
-        else if(p != NULL && q == NULL)
+        if(p->val != q->val)
             return false;
-        else {
-            if(p->val != q->val)
-                return false;
-            else {
-                bool lAns = helper(p->left, q->left);
-                bool rAns = helper(p->right, q->right);   
-                if(lAns && rAns)
-                    return true;
-                else
-                    return false;
-            }
-        }
+        
+        return helper(p->left, q->left) && helper(p->right, q->right);
     }
     bool isSameTree(TreeNode* p, TreeNode* q) {
         return helper(p, q);
