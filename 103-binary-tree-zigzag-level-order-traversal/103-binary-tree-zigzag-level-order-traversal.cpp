@@ -22,23 +22,23 @@ public:
         bool revFlag = false;
         
         while(!q.empty()) {
-            vector<int> curr;
             int n = q.size();
+            vector<int> curr(n);
             
             for(int i=0; i<n; i++) {
                 TreeNode* p = q.front();
                 q.pop();
                 
-                curr.push_back(p->val);
+                int idx = i;
+                if(revFlag)
+                    idx = n-i-1;
+                curr[idx] = p->val;
                 
                 if(p->left)
                     q.push(p->left);
                 if(p->right)
                     q.push(p->right);
             }
-            
-            if(revFlag)
-                reverse(curr.begin(), curr.end());
             
             res.push_back(curr);
             revFlag = !revFlag;
