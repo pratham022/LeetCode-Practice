@@ -11,42 +11,25 @@
  */
 class Solution {
 public:
-    TreeNode* helper(vector<int> &preorder, int &ind, int low, int high) {
-        if(low > high)
+
+    TreeNode* helper(vector<int>& preorder, int ub, int &i) {
+        if(i == preorder.size() || preorder[i] > ub)
             return NULL;
         
-        int elem = preorder[ind];
-        ind++;
+        TreeNode* root = new TreeNode(preorder[i]);
+        i++;
         
-        TreeNode* root = new TreeNode(elem);
-        
-        int i;
-        for(i=low; i<=high; i++) {
-            if(preorder[i] > elem)
-                break;
-        }
-        
-        root->left = helper(preorder, ind, ind, i-1);
-        root->right = helper(preorder, ind, i, high);
+        root->left = helper(preorder, root->val, i);
+        root->right = helper(preorder, ub, i);
         
         return root;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
         
-        // O(N square approach)
-        // https://www.geeksforgeeks.org/construct-bst-from-given-preorder-traversa/
+        int ub = INT_MAX;
+        int i = 0;
         
-        // The first element of preorder traversal is always root. 
-        // We first construct the root. 
-        // Then we find the index of the first element which is greater than the root.
-        // Let the index be ‘i’. The values between root and ‘i’ will be part of the
-        // left subtree, and the values between ‘i'(inclusive) and ‘n-1’ will be part
-        // of the right subtree. 
-        // Divide given pre[] at index “i” and recur for left and right sub-trees. 
-        
-        int ind = 0;
-        int n = preorder.size();
-        return helper(preorder, ind, 0, n-1);
+        return helper(preorder, ub, i);
         
     }
 };
