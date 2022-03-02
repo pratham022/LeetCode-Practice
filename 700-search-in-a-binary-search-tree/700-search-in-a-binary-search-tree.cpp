@@ -15,11 +15,9 @@ public:
         if(root == NULL)
             return NULL;
         
-        int curr = root->val;
-        if(curr == val)
+        if(root->val == val)
             return root;
-        
-        if(val < curr)
+        else if(val < root->val)
             return helper(root->left, val);
         else
             return helper(root->right, val);
