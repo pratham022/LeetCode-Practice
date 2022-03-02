@@ -12,16 +12,17 @@
 class Solution {
 public:
     TreeNode* helper(vector<int> &preorder, int &ind, int low, int high) {
-        if(ind >= preorder.size() || low > high) {
+        if(low > high)
             return NULL;
-        }
         
-        TreeNode* root = new TreeNode(preorder[ind]);
+        int elem = preorder[ind];
         ind++;
         
+        TreeNode* root = new TreeNode(elem);
+        
         int i;
-        for(i=low; i <= high; i++) {
-            if(preorder[i] > root->val)
+        for(i=low; i<=high; i++) {
+            if(preorder[i] > elem)
                 break;
         }
         
