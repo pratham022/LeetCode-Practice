@@ -21,40 +21,42 @@ public:
 
 class Solution {
 public:
-    void dfs(Node* curr, Node* node, vector<Node*> &visited) {
-        visited[node->val] = node;
-        for(Node* ele: curr->neighbors) {
+    void dfs(Node* curr, Node* node, vector<Node* > &visited) {
+        
+        visited[curr->val] = node;
+        for(Node* ele : curr->neighbors) {
             if(visited[ele->val] == NULL) {
                 Node* newNode = new Node(ele->val);
                 (node->neighbors).push_back(newNode);
                 dfs(ele, newNode, visited);
             }
-            else {
+            else 
                 (node->neighbors).push_back(visited[ele->val]);
-            }
         }
     }
     Node* cloneGraph(Node* node) {
-    
         if(node == NULL)
             return NULL;
         
-        vector<Node*> visited(1001, NULL);
+        vector<Node* > visited(105, NULL);
+        
         Node* copy = new Node(node->val);
         visited[node->val] = copy;
         
-        for(Node* curr: node->neighbors) {
+        for(Node* curr : node->neighbors) {
             
-            if(visited[curr->val] == NULL) {
-                Node* newNode = new Node(curr->val);
+            int elem = curr->val;
+            if(visited[elem] == NULL) {
+                Node* newNode = new Node(elem);
                 (copy->neighbors).push_back(newNode);
                 dfs(curr, newNode, visited);
             }
             else {
-                (copy->neighbors).push_back(visited[curr->val]);
+                // node already visited
+                (copy->neighbors).push_back(visited[elem]);
             }
         }
+        
         return copy;
     }
-    
 };
