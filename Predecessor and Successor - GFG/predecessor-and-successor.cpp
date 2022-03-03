@@ -108,41 +108,40 @@ struct Node
 // It sets pre and suc as predecessor and successor respectively
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 {
-    // Base case
-    if (root == NULL)  return ;
-
-    // If key is present at root
-    if (root->key == key)
-    {
-        // the maximum value in left subtree is predecessor
-        if (root->left != NULL)
-        {
-            Node* tmp = root->left;
-            while (tmp->right)
-                tmp = tmp->right;
-            pre = tmp ;
+    if(root == NULL)
+        return;
+    
+    if(key < root->key) {
+        // move towards left
+        suc = root;
+        findPreSuc(root->left, pre, suc, key);
+    }
+    else if(key > root->key) {
+        pre = root;
+        findPreSuc(root->right, pre, suc, key);
+    }
+    else {
+        // key is found at root
+        
+        // max value in the left subtree will be predecessor
+        if(root->left) {
+            Node* temp = root->left;
+            while(temp->right) {
+                temp = temp->right;
+            }
+            pre = temp;
         }
-
-        // the minimum value in right subtree is successor
-        if (root->right != NULL)
-        {
-            Node* tmp = root->right ;
-            while (tmp->left)
-                tmp = tmp->left ;
-            suc = tmp ;
+        
+        // min value in right subtree will be successor
+        if(root->right) {
+            Node* temp = root->right;
+            while(temp->left) {
+                temp = temp->left;
+            }
+            suc = temp;
         }
-        return ;
+        
+        return;
     }
 
-    // If key is smaller than root's key, go to left subtree
-    if (root->key > key)
-    {
-        suc = root ;
-        findPreSuc(root->left, pre, suc, key) ;
-    }
-    else // go to right subtree
-    {
-        pre = root ;
-        findPreSuc(root->right, pre, suc, key) ;
-    }
 }
