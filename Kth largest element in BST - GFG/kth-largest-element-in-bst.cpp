@@ -104,24 +104,27 @@ class Solution
         
         // we have used iterative approach to traverse the tree
         // Also maintain a counter which will return once reached k
+        
         stack<Node* > st;
+        if(root == NULL)
+            return -1;
+        
         Node* p = root;
-        while(p != NULL) {
+        while(p) {
             st.push(p);
             p = p->right;
         }
         
-        int ctr = 0;
         while(!st.empty()) {
             p = st.top();
             st.pop();
-            ctr++;
             
-            if(ctr == k)
+            k--;
+            if(k == 0)
                 return p->data;
             
             p = p->left;
-            while(p != NULL) {
+            while(p) {
                 st.push(p);
                 p = p->right;
             }
