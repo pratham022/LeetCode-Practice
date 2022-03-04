@@ -6,37 +6,45 @@ using namespace std;
 class Solution
 {
 	public:
-	void dfs(int i, vector<int> adj[], vector<bool> &visited, stack<int> &st) {
-	    
-	    visited[i] = true;
-	    
-	    for(int j=0; j<adj[i].size(); j++) {
-	        int neighbor = adj[i][j];
-	        
-	        if(visited[neighbor] == false)
-	            dfs(neighbor, adj, visited, st);
-	    }
-	    
-	    st.push(i);
-	    
-	}
 	//Function to return list containing vertices in Topological order. 
-	vector<int> topoSort(int V, vector<int> adj[]) {
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
 	    
-	    vector<bool> visited(V+1, false);
-	    stack<int> st;
-	    
+	    // prepare the indegree array for each node
+	    vector<int> indegree(V+1, 0);
 	    for(int i=0; i<V; i++) {
-	        if(visited[i] == false) {
-	            dfs(i, adj, visited, st);
+	        int u = i;
+	        for(int j=0; j<adj[i].size(); j++) {
+	            int v = adj[i][j];
+	            indegree[v]++;
 	        }
 	    }
 	    
+	    // now use BFS to find topological sort
 	    vector<int> res;
-	    while(!st.empty()) {
-	        res.push_back(st.top());
-	        st.pop();
+	    queue<int> q;
+	    for(int i=0; i<V; i++) {
+	        // put all the nodes with indegree 0 in the queue
+	        if(indegree[i] == 0) 
+	            q.push(i);
 	    }
+	    
+	    while(!q.empty()) {
+	        
+	        int node = q.front();
+	        q.pop();
+	        
+	        res.push_back(node);
+	        
+	        for(int j=0; j<adj[node].size(); j++) {
+	            int neighbor = adj[node][j];
+	            
+	            indegree[neighbor]--;
+	            if(indegree[neighbor] == 0)
+	                q.push(neighbor);
+	        }
+	    }
+	    
 	    return res;
 	}
 };
