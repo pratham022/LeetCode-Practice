@@ -25,6 +25,33 @@ public:
         }
         
     }
+    void bfs(int i, vector<vector<int>> &graph, vector<int> &color, bool &flag) {
+        
+        queue<int> q;
+        q.push(i);
+        color[i] = 0;
+        
+        while(!q.empty()) {
+            int node = q.front();
+            q.pop();
+            
+            for(int j=0; j<graph[node].size(); j++) {
+                int neighbor = graph[node][j];
+                
+                if(color[neighbor] == -1) {
+                    color[neighbor] = color[node] ^ 1;
+                    q.push(neighbor);
+                }
+                else {
+                    if(color[neighbor] == color[node]) {
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+        }
+        
+    }
     bool isBipartite(vector<vector<int>>& graph) {
         
         int n = graph.size();
@@ -39,7 +66,8 @@ public:
                 // start coloring
                 bool flag = true;
                 int prevColor = 1;
-                dfs(i, prevColor, graph, color, flag);
+                // dfs(i, prevColor, graph, color, flag);
+                bfs(i, graph, color, flag);
                 if(flag == false)
                     return false;
             }
