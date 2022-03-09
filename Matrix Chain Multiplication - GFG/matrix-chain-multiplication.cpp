@@ -32,13 +32,39 @@ public:
         return dp[i][j];
         
     }
+    int solveTabular(int arr[], int n) {
+        
+        for(int i=0; i<n; i++)
+            dp[i][i] = 0;
+        
+        int ans = INT_MAX;
+        
+        for(int len=2; len<n; len++) {
+            
+            for(int i=1; i<n - len + 1; i++) {
+                
+                int j = i + len - 1;
+                dp[i][j] = INT_MAX;
+                
+                for(int k=i; k<j; k++) {
+                    int temp = dp[i][k] + dp[k+1][j] + 
+                            arr[i-1] * arr[j] * arr[k];
+                    
+                    dp[i][j] = min(temp, dp[i][j]);
+                }
+            }
+        }
+        return dp[1][n-1];
+        
+    }
     int matrixMultiplication(int N, int arr[])
     {
         for(int i=0; i<1001; i++) {
             for(int j=0; j<1001; j++)
                 dp[i][j] = -1;
         }
-        return solve(arr, 1, N-1);
+        // return solve(arr, 1, N-1);
+        return solveTabular(arr, N);
     }
 };
 
