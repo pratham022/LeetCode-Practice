@@ -12,73 +12,67 @@ class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         
-        ListNode* p = l1;
-        ListNode* q = l2;
-        
         ListNode* res = NULL;
-        ListNode* t = NULL;
+        ListNode* p = NULL;
         
         int sum = 0, carry = 0;
-        
-        while(p && q) {
+        while(l1 && l2) {
             
-            sum = p->val + q->val + carry;
+            sum = l1->val + l2->val + carry;
             carry = sum / 10;
             sum = sum % 10;
             
             if(res == NULL) {
                 res = new ListNode(sum);
-                t = res;
+                p = res;
             }
             else {
-                t->next = new ListNode(sum);
-                t = t->next;
+                p->next = new ListNode(sum);
+                p = p->next;
             }
             
-            p = p->next;
-            q = q->next;
+            l1 = l1->next;
+            l2 = l2->next;
         }
         
-        while(p) {
-            sum = p->val + carry;
+        while(l1) {
+            sum = l1->val + carry;
             carry = sum / 10;
             sum = sum % 10;
-            
             if(res == NULL) {
                 res = new ListNode(sum);
-                t = res;
+                p = res;
             }
             else {
-                t->next = new ListNode(sum);
-                t = t->next;
+                p->next = new ListNode(sum);
+                p = p->next;
             }
-            p = p->next;
+            l1 = l1->next;
         }
         
-        while(q) {
-            sum = q->val + carry;
+        while(l2) {
+            sum = l2->val + carry;
             carry = sum / 10;
             sum = sum % 10;
-            
             if(res == NULL) {
                 res = new ListNode(sum);
-                t = res;
+                p = res;
             }
             else {
-                t->next = new ListNode(sum);
-                t = t->next;
+                p->next = new ListNode(sum);
+                p = p->next;
             }
-            q = q->next;
+            l2 = l2->next;
         }
         
         if(carry) {
             if(res == NULL) {
                 res = new ListNode(carry);
-                t = res;
+                p = res;
             }
             else {
-                t->next = new ListNode(carry);
-                t = t->next;
+                p->next = new ListNode(carry);
+                p = p->next;
             }
         }
         
