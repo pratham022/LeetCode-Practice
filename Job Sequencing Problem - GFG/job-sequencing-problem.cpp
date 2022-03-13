@@ -23,57 +23,52 @@ struct Job
 };
 */
 
-bool comparison(Job a, Job b)
-{
-     return (a.profit > b.profit);
-}
 class Solution 
 {
     public:
+    static bool comparator(Job a, Job b) {
+        if(a.profit > b.profit)
+            return true;
+        else
+            return false;
+    }
     //Function to find the maximum profit and the number of jobs done.
     vector<int> JobScheduling(Job arr[], int n) 
     { 
         // your code here
-        sort(arr, arr+n, comparison);
-        vector<int> jobs;
-
-        int result[n]; // To store result (Sequence of jobs)
-        bool slot[n];  // To keep track of free time slots
-    
-        // Initialize all slots to be free
-        for (int i=0; i<n; i++)
-            slot[i] = false;
-    
-        // Iterate through all given jobs
-        for (int i=0; i<n; i++)
-        {
-           // Find a free slot for this job (Note that we start
-           // from the last possible slot)
-           for (int j=min(n, arr[i].dead)-1; j>=0; j--)
-           {
-              // Free slot found
-              if (slot[j]==false)
-              {
-                 result[j] = i;  // Add this job to result
-                 slot[j] = true; // Make this slot occupied
-                 break;
-              }
-           }
+        sort(arr, arr+n, comparator);
+        
+        // find the maximum deadline from array
+        int maxDeadline = arr[0].dead;
+        for(int i=1; i<n; i++)
+            maxDeadline = max(maxDeadline, arr[i].dead);
+        
+        bool slots[maxDeadline + 1];
+        
+        // initialise all slots as empty
+        for(int i=0; i<=maxDeadline; i++)
+            slots[i] = false;
+        
+        int maxProfit = 0;
+        int jobs = 0;
+        
+        for(int i=0; i<n; i++) {
+            
+            // find a free slot for this job 
+            for(int j=arr[i].dead; j>0; j--) {
+                
+                if(slots[j] == false) {
+                    slots[j] = true;
+                    jobs++;
+                    maxProfit += arr[i].profit;
+                    break;
+                }
+                
+            }
+            
         }
         
-        int num_of_jobs=0;
-        int max_profit=0;
-        for(int i=0;i<n;i++)
-        {
-            if(slot[i])
-            {
-                num_of_jobs++;
-                max_profit=max_profit+arr[result[i]].profit;
-            }
-        }
-        jobs.push_back(num_of_jobs);
-        jobs.push_back(max_profit);
-        return jobs;
+        return {jobs, maxProfit};
     } 
 };
 
