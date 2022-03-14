@@ -12,12 +12,10 @@ public:
         else {
             
             for(int j=i; j<candidates.size(); j++) {
-                sum += candidates[j];
                 curr.push_back(candidates[j]);
                 
-                solve(j, curr, sum, candidates, target, res);
+                solve(j, curr, sum+candidates[j], candidates, target, res);
                 
-                sum -= candidates[j];
                 curr.pop_back();
             }
         }
